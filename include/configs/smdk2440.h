@@ -45,6 +45,7 @@
 #define CONFIG_S3C24X0_SERIAL
 #define CONFIG_SERIAL1		1	/* we use SERIAL 1 on SMDK2410 */
 
+#if 0
 /************************************************************
  * USB support (currently only works with D-cache off)
  ************************************************************/
@@ -56,6 +57,7 @@
  * RTC
  ************************************************************/
 #define CONFIG_RTC_S3C24X0
+#endif
 
 #define CONFIG_BAUDRATE		115200
 
@@ -71,7 +73,7 @@
  * Command line configuration.
  */
 #define CONFIG_CMD_BSP
-#define CONFIG_CMD_DATE
+/* #define CONFIG_CMD_DATE */
 #define CONFIG_CMD_NAND
 #define CONFIG_CMD_REGINFO
 
@@ -160,6 +162,7 @@
 #define CONFIG_SYS_NAND_BASE		0x4E000000
 #endif
 
+#if 0
 /*
  * File system
  */
@@ -169,6 +172,7 @@
 #define CONFIG_MTD_PARTITIONS
 #define CONFIG_YAFFS2
 #define CONFIG_RBTREE
+#endif
 
 /* additions for new relocation code, must be added to all boards */
 #define CONFIG_SYS_SDRAM_BASE	PHYS_SDRAM_1
