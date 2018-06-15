@@ -517,8 +517,9 @@ static int reserve_uboot(void)
 	 * reserve memory for U-Boot code, data & bss
 	 * round down to next 4 kB limit
 	 */
-	gd->relocaddr -= gd->mon_len;
-	gd->relocaddr &= ~(4096 - 1);
+	//gd->relocaddr -= gd->mon_len;
+	//gd->relocaddr &= ~(4096 - 1);
+	gd->relocaddr = (unsigned int)_start;
 #ifdef CONFIG_E500
 	/* round down to next 64 kB limit so that IVPR stays aligned */
 	gd->relocaddr &= ~(65536 - 1);
