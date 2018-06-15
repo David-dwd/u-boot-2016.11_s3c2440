@@ -57,6 +57,8 @@
 
 /* MXIC */
 #define MX29LV040	0x004F
+#define MTLV160DB	0X2249
+
 
 /* WINBOND */
 #define W39L040A	0x00D6
@@ -401,6 +403,25 @@ static const struct amd_flash_info jedec_table[] = {
 		}
 	},
 #endif
+	/* JZ2440v3使用的MTLV160DB */
+	{
+		.mfr_id 	= (u16)MX_MANUFACT, /* 厂家ID */
+		.dev_id 	= MTLV160DB,		/* 设备ID */
+		.name		= "MXIC MTLV160DB",
+		.uaddr		= { /* NOR flash看到解锁地址 */
+			[1] = MTD_UADDR_0x0555_0x02AA /* x16 */
+		},
+		.DevSize	= SIZE_2MiB,		/* 总大小 */
+		.CmdSet 	= P_ID_AMD_STD,
+		.NumEraseRegions= 4,
+		.regions	= {
+			ERASEINFO(16*1024, 1),
+			ERASEINFO(8*1024, 2),
+			ERASEINFO(32*1024, 1),
+			ERASEINFO(64*1024, 31),
+		}
+	},
+
 };
 
 static inline void fill_info(flash_info_t *info, const struct amd_flash_info *jedec_entry, ulong base)
