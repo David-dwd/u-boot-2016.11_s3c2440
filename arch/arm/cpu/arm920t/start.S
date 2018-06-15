@@ -1,7 +1,7 @@
 /*
  *  armboot - Startup Code for ARM920 CPU-core
  *
- *  Copyright (c) 2001	Marius Gröger <mag@sysgo.de>
+ *  Copyright (c) 2001	Marius Gr?ger <mag@sysgo.de>
  *  Copyright (c) 2002	Alex Züpke <azu@sysgo.de>
  *  Copyright (c) 2002	Gary Jennejohn <garyj@denx.de>
  *
@@ -78,13 +78,37 @@ copyex:
 	ldr	r1, =0x3ff
 	ldr	r0, =INTSUBMSK
 	str	r1, [r0]
-# endif
-
 	/* FCLK:HCLK:PCLK = 1:2:4 */
 	/* default FCLK is 120 MHz ! */
 	ldr	r0, =CLKDIVN
 	mov	r1, #3
 	str	r1, [r0]
+# endif
+# if defined(CONFIG_S3C2440)
+   #define S3C2440_MPLL_400MHZ     ((0x5c<<12)|(0x01<<4)|(0x01))
+   /* FCLK:HCLK:PCLK = 1:4:8 */
+   /* default FCLK is 400 MHz ! */
+   /* 2. 设置时钟 */
+   ldr r0, =0x4c000014
+   mov r1, #0x05;            // FCLK:HCLK:PCLK=1:4:8
+   str r1, [r0]
+
+   /* 如果HDIVN非0，CPU的总线模式应该从“fast bus mode”变为“asynchronous bus mode” */
+   mrc p15, 0, r1, c1, c0, 0       /* 读出控制寄存器 */ 
+   orr r1, r1, #0xc0000000         /* 设置为“asynchronous bus mode” */
+   mcr p15, 0, r1, c1, c0, 0       /* 写入控制寄存器 */
+
+   /* MPLLCON = S3C2440_MPLL_400MHZ */
+   ldr r0, =0x4c000004
+   ldr r1, =S3C2440_MPLL_400MHZ
+   str r1, [r0]
+
+   /* 启动ICACHE */
+   mrc p15, 0, r0, c1, c0, 0
+   orr r0, r0, #(1<<12)
+   mcr p15, 0, r0, c1, c0, 0
+# endif
+	
 #endif	/* CONFIG_S3C24X0 */
 
 	/*
