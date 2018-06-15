@@ -44,6 +44,9 @@ SECTIONS
 		*(.__image_copy_start)
 		*(.vectors)
 		CPUDIR/start.o (.text*)
+		arch/arm/lib/crt0.o (.text*)
+		arch/arm/lib/vectors.o (.text*)
+		board/samsung/smdk2440/built-in.o (.text*)
 		*(.text*)
 	}
 

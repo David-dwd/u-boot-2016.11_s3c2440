@@ -14,7 +14,8 @@ obj-y	+= vectors_m.o crt0.o
 else ifdef CONFIG_ARM64
 obj-y	+= crt0_64.o
 else
-obj-y	+= vectors.o crt0.o
+#obj-y	+= vectors.o crt0.o
+extra-y	+= vectors.o crt0.o
 endif
 
 ifndef CONFIG_SPL_BUILD
