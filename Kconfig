@@ -23,10 +23,18 @@ config LOCALVERSION
 	  any files with a filename matching localversion* in your
 	  object and source tree, in that order.  Your total string can
 	  be a maximum of 64 characters.
+config COMPILE_TOOLS
+   bool "arm-linux-"
+   default y
+   help
+     select the compile tools
+     if you select the arm-linux- then the TOOLS is arm-linux-gcc
+     if you don't select it or select gcc
+     the compile tool will be gcc
 
 config LOCALVERSION_AUTO
 	bool "Automatically append version information to the version string"
-	default y
+	default n
 	help
 	  This will try to automatically determine if the current tree is a
 	  release tree by looking for Git tags that belong to the current

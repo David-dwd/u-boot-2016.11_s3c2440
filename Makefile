@@ -2,6 +2,7 @@
 # SPDX-License-Identifier:	GPL-2.0+
 #
 
+CROSS_COMPILE=/work/s3c2440/cross_tools/4.3.2/bin/arm-none-linux-gnueabi-
 VERSION = 2016
 PATCHLEVEL = 11
 SUBLEVEL =

@@ -114,6 +114,18 @@
 #define CONFIG_LZO
 #define CONFIG_LZMA
 
+#define CONFIG_BOOTARGS "console=ttySAC0,115200 noinitrd root=/dev/mtdblock3 init=/linuxrc"
+#define CONFIG_BOOTCOMMAND "nand read.jffs2 0x30007FC0 kernel; bootm 0x30007FC0"
+#define CONFIG_RAMBOOTCOMMAND  "setenv bootargs noinitrd root=/dev/mtdblock3 " \
+                               "init=/linuxrc console=ttySAC0,115200;" \
+                               " nand read.jffs2 0x30007FC0 kernel; bootm 0x30007FC0"
+
+#define CONFIG_NFSBOOTCOMMAND  "setenv bootargs console=ttySAC0,115200 root=/dev/nfs " \
+                               "nfsroot=$serverip:/home/book/nfs/nfsroot " \
+								"ip=$ipaddr:$serverip:$gatewayip:$netmask::eth0:off init=/linuxrc; " \
+								"nfs 30000000 $serverip:/home/book/nfs/kernel/uImage; bootm 30000000"
+
+
 /*-----------------------------------------------------------------------
  * Physical Memory Map
  */
@@ -139,11 +151,17 @@
 #define CONFIG_SYS_FLASH_BANKS_LIST     { CONFIG_SYS_FLASH_BASE }
 #define CONFIG_SYS_MAX_FLASH_SECT	(128)
 
-#define CONFIG_ENV_ADDR			(CONFIG_SYS_FLASH_BASE + 0x070000)
-#define CONFIG_ENV_IS_IN_FLASH
-#define CONFIG_ENV_SIZE			0x10000
-/* allow to overwrite serial and ethaddr */
-#define CONFIG_ENV_OVERWRITE
+#define CONFIG_ENV_IS_IN_NAND
+#define CONFIG_ENV_OFFSET		0x00040000
+#define CONFIG_ENV_SIZE 		0x00020000
+
+#define CONFIG_CMD_MTDPARTS
+#define CONFIG_MTD_DEVICE
+#define MTDIDS_DEFAULT		"nand0=jz2440-0"  /* 哪一个设备 */
+#define MTDPARTS_DEFAULT	"mtdparts=jz2440-0:256k(u-boot),"	\
+							"128k(params),"		\
+							"2m(kernel),"	\
+							"-(rootfs)"		\
 
 /*
  * Size of malloc() pool
