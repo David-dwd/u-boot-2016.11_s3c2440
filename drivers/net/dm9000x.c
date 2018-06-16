@@ -363,6 +363,7 @@ static int dm9000_init(struct eth_device *dev, bd_t *bd)
 	/* Enable TX/RX interrupt mask */
 	DM9000_iow(DM9000_IMR, IMR_PAR);
 
+#if 0
 	i = 0;
 	while (!(dm9000_phy_read(1) & 0x20)) {	/* autonegation complete bit */
 		udelay(1000);
@@ -394,6 +395,8 @@ static int dm9000_init(struct eth_device *dev, bd_t *bd)
 		break;
 	}
 	printf("mode\n");
+#endif
+
 	return 0;
 }
 
@@ -428,7 +431,7 @@ static int dm9000_send(struct eth_device *netdev, void *packet, int length)
 	while ( !(DM9000_ior(DM9000_NSR) & (NSR_TX1END | NSR_TX2END)) ||
 		!(DM9000_ior(DM9000_ISR) & IMR_PTM) ) {
 		if (get_timer(0) >= tmo) {
-			printf("transmission timeout\n");
+			debug("transmission timeout\n");
 			break;
 		}
 	}

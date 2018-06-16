@@ -37,7 +37,7 @@
 #define HASHES_PER_LINE 65	/* Number of "loading" hashes per line	*/
 #define NFS_RETRY_COUNT 30
 #ifndef CONFIG_NFS_TIMEOUT
-# define NFS_TIMEOUT 2000UL
+# define NFS_TIMEOUT 10000UL
 #else
 # define NFS_TIMEOUT CONFIG_NFS_TIMEOUT
 #endif
@@ -906,7 +906,7 @@ void nfs_start(void)
 		      net_boot_file_expected_size_in_blocks << 9);
 		print_size(net_boot_file_expected_size_in_blocks << 9, "");
 	}
-	debug("\nLoad address: 0x%lx\nLoading: *\b", load_addr);
+	printf("\nLoad address: 0x%lx\nLoading: *\b", load_addr);
 
 	net_set_timeout_handler(nfs_timeout, nfs_timeout_handler);
 	net_set_udp_handler(nfs_handler);
