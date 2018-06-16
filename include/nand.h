@@ -27,6 +27,11 @@
 #endif
 #endif
 
+#ifdef CONFIG_CMD_NAND_YAFFS
+#define WITH_YAFFS_OOB    (1 << 0)
+#define WITH_DROP_FFS   (1 << 0)
+#endif
+
 extern void nand_init(void);
 
 #include <linux/compat.h>
